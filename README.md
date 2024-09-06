@@ -241,7 +241,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/query-bot', [QueryBotController::class, 'handleQuery']);
-    Route::get('/query', [QueryBotController::class, 'handleQuery']);
     Route::get('/call-logs', [QueryBotController::class, 'getCallLogs']);
     Route::get('/agent-performance', [QueryBotController::class, 'getAgentPerformance']);
     Route::get('/targets-achievements', [QueryBotController::class, 'getTargetsAchievements']);
@@ -259,7 +258,7 @@ Extending Query Handling Functionality
 To extend or modify the query handling functionality:
 
 #### Add Keywords:
-Update the $handlers array in the handleQuery method. For example, to add a new query type, add a new entry to $handlers array:
+Update the $handlers array in the handleQuery method. For example, to add a new query type, add a new entry:
 ```php
 'new keyword' => 'handleNewQueryType',
 ```

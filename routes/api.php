@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/query-bot', [QueryBotController::class, 'handleQuery']);
-    Route::get('/query', [QueryBotController::class, 'handleQuery']);
     Route::get('/call-logs', [QueryBotController::class, 'getCallLogs']);
     Route::get('/agent-performance', [QueryBotController::class, 'getAgentPerformance']);
     Route::get('/targets-achievements', [QueryBotController::class, 'getTargetsAchievements']);
