@@ -35,7 +35,10 @@ This Query Bot is using a simple NLP (Natural Language Proccess), so it can reco
     ```bash
     php artisan db:seed
     ```
-
+6. Run Server
+```bash
+php artisan serve
+```
 ## Usage
 ### Register a User
 Api endpoint:
