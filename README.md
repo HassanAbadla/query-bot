@@ -210,14 +210,14 @@ POST /api/query-bot
 ```
 • Retrieve all Call Logs
 ```bash
-POST /api/call-logs
+GET /api/call-logs
 ```
 
 • Retrieve all Targets and Achievement
 ```bash
-POST /api/targets-achievements
+GET /api/targets-achievements
 ```
 • Retrieve all agents performances
 ```bash
-POST /api/agent-performance
+GET /api/agent-performance
 ```
