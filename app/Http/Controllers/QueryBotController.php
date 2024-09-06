@@ -9,22 +9,41 @@ use Illuminate\Http\Request;
 
 class QueryBotController extends Controller
 {
-
     public function handleQuery(Request $request)
     {
         $query = $request->input('query');
-        
-        if (preg_match('/calls|logs/i', $query)) {
-            return $this->handleCallLogs($query);
-        } elseif (preg_match('/agent performance|performance|progress/i', $query)) {
-            return $this->handleAgentPerformance($query);
-        } elseif (preg_match('/targets|achievements|salled|statics/i', $query)) {
-            return $this->handleTargetsAchievements($query);
-        } elseif (preg_match('/hello|hi| |/i', $query)) {
-            return response()->json(['message' => 'Welcome to Query Bot, How can I help you?'], 200);
-        } else {
-            return response()->json(['error' => 'Invalid query'], 400);
+
+        // Define keywords to handler methods
+        $handlers = [
+            'calls' => 'handleCallLogs',
+            'logs' => 'handleCallLogs',
+            'agent performance' => 'handleAgentPerformance',
+            'performance' => 'handleAgentPerformance',
+            'progress' => 'handleAgentPerformance',
+            'targets' => 'handleTargetsAchievements',
+            'achievements' => 'handleTargetsAchievements',
+            'salled' => 'handleTargetsAchievements',
+            'statics' => 'handleTargetsAchievements',
+            'hello' => 'handleGreeting',
+            'hi' => 'handleGreeting',
+        ];
+
+        // Lowercase the query for matching
+        $lowerCaseQuery = strtolower($query);
+
+        // Match Query to handler
+        foreach ($handlers as $keyword => $method) {
+            if (strpos($lowerCaseQuery, $keyword) !== false) {
+                return $this->$method($query);
+            }
         }
+
+        return response()->json(['error' => 'Invalid query'], 400);
+    }
+
+    public function handleGreeting()
+    {
+        return response()->json(['message' => 'Welcome to Query Bot, How can I help you?'], 200);
     }
 
     public function handleCallLogs($query)
@@ -38,7 +57,7 @@ class QueryBotController extends Controller
             $callLogs = CallLog::latest()->get();
         }
 
-        // the call_duration data are intigers, ex.:(5, 123, 10, ...,). So I am converting them into time periods like so: (00:05, 02:03)
+        // Converting call_duration from intigers to time period (00:05, 02:03)
         foreach ($callLogs as $log) {
             $hours = intdiv($log->call_duration, 60);
             $minutes = $log->call_duration % 60;
@@ -86,7 +105,6 @@ class QueryBotController extends Controller
         }
         return response()->json(['targets' => $targets]);
     }
-
 
     public function getCallLogs()
     {

@@ -221,3 +221,66 @@ GET /api/targets-achievements
 ```bash
 GET /api/agent-performance
 ```
+## Overview
+
+The Query Bot API is a Laravel-based backend service designed to handle various queries related to call logs, agent performance, and targets/achievements. It provides a structured way to process user input and return relevant information.
+
+## Architecture
+
+### Controller
+
+The main controller for handling queries is `QueryBotController`. It contains methods that respond to user queries by calling specific handler methods based on the keywords detected in the request.
+
+### Routes
+
+The API provides the following routes:
+
+```php
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/query-bot', [QueryBotController::class, 'handleQuery']);
+    Route::get('/query', [QueryBotController::class, 'handleQuery']);
+    Route::get('/call-logs', [QueryBotController::class, 'getCallLogs']);
+    Route::get('/agent-performance', [QueryBotController::class, 'getAgentPerformance']);
+    Route::get('/targets-achievements', [QueryBotController::class, 'getTargetsAchievements']);
+});
+```
+### Query Handling Logic
+The handleQuery method processes incoming requests by matching the input query against predefined keywords. Based on the matched keyword, it delegates the call to the corresponding handler method.
+
+### Example of Query Handlers
+Call Logs: Handled by handleCallLogs()
+Agent Performance: Handled by handleAgentPerformance()
+Targets and Achievements: Handled by handleTargetsAchievements()
+Greetings: Handled by handleGreeting()
+Extending Query Handling Functionality
+To extend or modify the query handling functionality:
+
+#### Add Keywords:
+Update the $handlers array in the handleQuery method. For example, to add a new query type, add a new entry to $handlers array:
+```php
+'new keyword' => 'handleNewQueryType',
+```
+#### Create a New Handler:
+Implement a new method in the QueryBotController that follows the existing pattern. For example:
+```php
+public function handleNewQueryType($query)
+{
+    // Handle the new query type
+}
+```
+
+### Error Handling
+The API provides error responses for invalid queries or when no data is found. For example, if an invalid query is received, it returns:
+```json
+{"error": "Invalid query"}
+```
+
+## Conclusion
+The Query Bot API is designed to be modular and easily extendable. By following the outlined steps, you can enhance its capabilities to accommodate new types of queries and responses.
+
+### Notes:
+- This README provides a clear overview of the project, its structure, and how to extend its functionality.
+- Feel free to customize the content as needed to better fit your project's specifics and any additional details you want to include.
