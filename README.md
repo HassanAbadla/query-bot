@@ -201,8 +201,8 @@ To specify answerd or missed calls:
 {
     "query": "give me the the missed calls"
 }
-This will retrieve the latest missed calls from the database.
 ```
+This will retrieve the latest missed calls from the database.
 ### API Endpoints
 • Start querying
 ```bash
