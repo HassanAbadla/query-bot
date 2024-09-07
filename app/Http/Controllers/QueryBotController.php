@@ -109,16 +109,16 @@ class QueryBotController extends Controller
     public function getCallLogs()
     {
         $callLogs = CallLog::latest()->get();
-        return response()->json(['callLogs' => $callLogs]);
+        return $callLogs ? response()->json(['callLogs' => $callLogs]) : response()->json(['message' => 'There is no call logs data yet!']);
     }
 
     public function getAgentPerformance() {
-        $targets = TargetAchievement::latest()->get();
-        return response()->json(['targets' => $targets]);
+        $targets = AgentPerformance::latest()->get();
+        return $targets ? response()->json(['targets' => $targets]) : response()->json(['message' => 'There is no Agents Performances data yet!']);
     }
     public function getTargetsAchievements() {
-        $performance = AgentPerformance::latest()->get();
-        return response()->json(['Performance' => $performance], 200);
+        $performance = TargetAchievement::latest()->get();
+        return $performance ? response()->json(['Performance' => $performance], 200) : response()->json(['message' => 'There is no Targets and Achievements data yet!']);
     }
 
 }
