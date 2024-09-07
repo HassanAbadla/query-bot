@@ -30,6 +30,7 @@ This Query Bot is using a simple NLP (Natural Language Proccess), so it can reco
     ```bash
     php artisan migrate
     ```
+> **Note:** This is a simple database for showcasing the Bot.
 
 5. Run Seeders:
     ```bash
